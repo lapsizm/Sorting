@@ -1,0 +1,32 @@
+time for InsertSort:
+size: 10, time: 614 ns
+size: 100, time: 35856 ns
+size: 1000, time: 3432633 ns
+size: 10000, time: 339 ms
+size: 100000, time: 32182 ms
+size: 250000, time: 203227 ms
+
+time for BubbleSort:
+size: 10, time: 1053 ns
+size: 100, time: 62057 ns
+size: 1000, time: 6209741 ns
+size: 10000, time: 620 ms
+size: 100000, time: 62168 ms
+size: 250000, time: 389640 ms
+
+time for MergeSort:
+size: 10, time: 6471 ns
+size: 100, time: 74201 ns
+size: 1000, time: 851999 ns
+size: 10000, time: 10 ms
+size: 100000, time: 127 ms
+size: 250000, time: 315 ms
+
+time for QuickSort:
+size: 10, time: 1191 ns
+size: 100, time: 16966 ns
+size: 1000, time: 258126 ns
+size: 10000, time: 3 ms
+size: 100000, time: 43 ms
+size: 250000, time: 117 ms
+
