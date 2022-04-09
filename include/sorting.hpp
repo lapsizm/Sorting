@@ -105,6 +105,11 @@ public:
             QuickSort(vec.begin(), vec.end());
             t = std::chrono::high_resolution_clock::now();
         }
+        if(name_ == "lib_sort"){
+            time_ = std::chrono::high_resolution_clock::now();
+            std::sort(vec.begin(), vec.end());
+            t = std::chrono::high_resolution_clock::now();
+        }
         if (vec.size() < 10000) {
             stream_ << "size: " << vec.size() << ", time: "
                     << std::chrono::duration_cast<std::chrono::nanoseconds>(t - time_).count() << " ns" << std::endl;
