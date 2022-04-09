@@ -105,7 +105,7 @@ public:
             QuickSort(vec.begin(), vec.end());
             t = std::chrono::high_resolution_clock::now();
         }
-        if(name_ == "lib_sort"){
+        if(name_ == "std_sort"){
             time_ = std::chrono::high_resolution_clock::now();
             std::sort(vec.begin(), vec.end());
             t = std::chrono::high_resolution_clock::now();
