@@ -50,7 +50,8 @@ TEST_F(SortTest, SortingTime){
     std::string bubb = "BubbleSort";
     std::string merg = "MergeSort";
     std::string quick = "QuickSort";
-    std::vector<std::string> str_vec{ins, bubb, merg,quick};
+    std::string lib_sort = "std_sort";
+    std::vector<std::string> str_vec{ins, bubb, merg,quick, lib_sort};
     std::ofstream fout("../sort.txt");
 
     for(int i = 0; i < str_vec.size(); ++i){
