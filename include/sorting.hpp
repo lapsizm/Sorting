@@ -4,23 +4,32 @@
 #include <chrono>
 #include <fstream>
 
-template<typename T>
-void InsertSort(std::vector<T> &vec) {
-    for (size_t i = 1; i < vec.size(); ++i){
-        size_t j = i;
-        while(j > 0 && vec[j - 1] > vec[j]){
-            std::swap(vec[j - 1], vec[j]);
-            --j;
+template<typename It>
+void InsertSort(It first, It last) {
+    for (auto i = first; i != last; ++i) {
+        auto j = i;
+        ++j;
+        if (j != last) {
+            while (j != first && *(std::prev(j)) > *(j)) {
+                std::swap(*std::prev(j), *(j));
+                --j;
+            }
         }
     }
 }
 
-template<typename T>
-void BubbleSort(std::vector<T> &vec) {
-    for (size_t i = 0; i < vec.size(); ++i) {
-        for (size_t j = 0; j < vec.size() - i - 1; ++j) {
-            if (vec[j] > vec[j + 1]) {
-                std::swap(vec[j], vec[j + 1]);
+template<typename It>
+void BubbleSort(It first, It last) {
+    for (auto i = first; i != last; ++i) {
+        for (auto j = first; j != last; ++j) {
+            auto temp_end = last;
+            --temp_end;
+            if (j != temp_end) {
+                auto temp = j;
+                ++temp;
+                if (*j > *(temp)) {
+                    std::swap(*(j), *(temp));
+                }
             }
         }
     }
@@ -28,24 +37,27 @@ void BubbleSort(std::vector<T> &vec) {
 
 template<typename It>
 void MergeSort(It first, It last) {
-    if (last - first < 2) {
+    if (std::distance(first, last) < 2) {
         return;
     }
-    if (last - first == 2) {
-        if (*first > *(first + 1)) {
-            std::swap(*first, *(first + 1));
+    if (std::distance(first, last) == 2) {
+        if (*first > *(std::next(first))) {
+            std::swap(*first, *(std::next(first)));
         }
         return;
     }
 
-    MergeSort(first, first + (last - first) / 2);
-    MergeSort( first + (last - first) / 2, last);
+    It temp_it = first;
+    std::advance(temp_it, std::distance(first, last) / 2);
+    MergeSort(first, temp_it);
+    MergeSort(temp_it, last);
     std::vector<typename It::value_type> vec_new;
     It b1 = first;
-    It e1 = first + (last - first) / 2;
+    It e1 = first;
+    std::advance(e1, (std::distance(first, last)) / 2);
     It b2 = e1;
-    while (vec_new.size() < last - first) {
-        if (b1 - e1 >= 0 || (last - b2 > 0 && *b2 < *b1)) {
+    while (vec_new.size() < std::distance(first, last)) {
+        if (b1 == e1 || std::distance(b2, last) > 0 && *b2 < *b1) {
             vec_new.push_back(*b2);
             ++b2;
         } else {
@@ -53,27 +65,28 @@ void MergeSort(It first, It last) {
             ++b1;
         }
     }
-    for (auto i = first, j = 0; i != last; ++i, ++j) {
-        *i = vec_new[j];
+    int count = 0;
+    for (It i = first;  i != last; ++i, ++count) {
+        *i = vec_new[count];
     }
 }
 
 
 template<typename It>
 void QuickSort(It first, It last) {
-    if (last - first > 1) {
-        auto pivot = last - 1;
+    if (std::distance(first, last) > 1) {
+        auto pivot = std::prev(last);
         auto i = first;
         for (auto j = first; j != pivot; ++j) {
-            // bool format
             if (*pivot > *j) {
-                std::swap(*i++, *j);
+                std::swap(*i, *j);
+                ++i;
             }
         }
         std::swap(*i, *pivot);
         It bound = i;
         QuickSort(first, bound);
-        QuickSort(bound + 1, last);
+        QuickSort(std::next(bound), last);
     }
 }
 
@@ -81,18 +94,20 @@ template<typename T>
 class Timer {
 public:
     Timer(const std::string &name, std::ostream &stream) : name_(name), stream_(stream) {}
+
     Timer(const std::string &name) : name_(name) {}
-    void Start(std::vector<T>& vec){
+
+    void Start(std::vector<T> &vec) {
         std::chrono::time_point<std::chrono::high_resolution_clock> t;
         if (name_ == "InsertSort") {
             time_ = std::chrono::high_resolution_clock::now();
-            InsertSort(vec);
+            InsertSort(vec.begin(), vec.end());
             t = std::chrono::high_resolution_clock::now();
 
         }
         if (name_ == "BubbleSort") {
             time_ = std::chrono::high_resolution_clock::now();
-            BubbleSort(vec);
+            BubbleSort(vec.begin(), vec.end());
             t = std::chrono::high_resolution_clock::now();
         }
         if (name_ == "MergeSort") {
@@ -113,8 +128,7 @@ public:
         if (vec.size() < 10000) {
             stream_ << "size: " << vec.size() << ", time: "
                     << std::chrono::duration_cast<std::chrono::nanoseconds>(t - time_).count() << " ns" << std::endl;
-        }
-        else{
+        } else {
             stream_ << "size: " << vec.size() << ", time: "
                     << std::chrono::duration_cast<std::chrono::milliseconds>(t - time_).count() << " ms" << std::endl;
         }
