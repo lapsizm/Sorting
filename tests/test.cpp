@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "sorting.hpp"
 #include <random>
-
+#include <list>
 
 class SortTest : public ::testing::Test {
 protected:
@@ -69,28 +69,27 @@ TEST_F(SortTest, SortingTime){
 }
 
 
-
 TEST(InsertSort, sorting){
     std::vector<int> vec{2,3,1,54,31,46};
     std::vector<int> vec2{1,2,3,31,46,54};
-    InsertSort(vec);
+    InsertSort(vec.begin(), vec.end());
     ASSERT_EQ(vec,vec2);
 
     std::vector<char> vec3{'c','4','a','2','1','3'};
     std::vector<char> vec4{'1','2','3','4','a','c'};
-    InsertSort(vec3);
+    InsertSort(vec3.begin(), vec3.end());
     ASSERT_EQ(vec3,vec4);
 }
 
 TEST(BubbleSort, sorting){
     std::vector<int> vec{2,3,1,54,31,46};
     std::vector<int> vec2{1,2,3,31,46,54};
-    BubbleSort(vec);
+    BubbleSort(vec.begin(), vec.end());
     ASSERT_EQ(vec,vec2);
 
     std::vector<char> vec3{'c','4','a','2','1','3'};
     std::vector<char> vec4{'1','2','3','4','a','c'};
-    BubbleSort(vec3);
+    BubbleSort(vec3.begin(), vec3.end());
     ASSERT_EQ(vec3,vec4);
 }
 TEST(MergeSort, sorting){
@@ -115,3 +114,51 @@ TEST(QuickSort, sorting){
     QuickSort(vec3.begin(), vec3.end());
     ASSERT_EQ(vec3,vec4);
 }
+<<<<<<< HEAD
+
+TEST(TestsForLists, InsertSort){
+    std::list<int> vec{2,3,1,54,31,46};
+    std::list<int> vec2{1,2,3,31,46,54};
+    InsertSort(vec.begin(), vec.end());
+    ASSERT_EQ(vec,vec2);
+
+    std::list<char> vec3{'c','4','a','2','1','3'};
+    std::list<char> vec4{'1','2','3','4','a','c'};
+    InsertSort(vec3.begin(), vec3.end());
+    ASSERT_EQ(vec3,vec4);
+}
+
+TEST(TestsForLists, BubbleSort){
+    std::list<int> vec{2,3,1,54,31,46};
+    std::list<int> vec2{1,2,3,31,46,54};
+    BubbleSort(vec.begin(), vec.end());
+    ASSERT_EQ(vec,vec2);
+
+    std::list<char> vec3{'c','4','a','2','1','3'};
+    std::list<char> vec4{'1','2','3','4','a','c'};
+    BubbleSort(vec3.begin(), vec3.end());
+    ASSERT_EQ(vec3,vec4);
+}
+TEST(TestsForLists, MergeSort){
+    std::list<int> vec{2,3,1,54,31,46};
+    std::list<int> vec2{1,2,3,31,46,54};
+    MergeSort(vec.begin(), vec.end());
+    ASSERT_EQ(vec,vec2);
+
+    std::list<char> vec3{'c','4','a','2','1','3'};
+    std::list<char> vec4{'1','2','3','4','a','c'};
+    MergeSort(vec3.begin(), vec3.end());
+    ASSERT_EQ(vec3,vec4);
+}
+TEST(TestsForLists, QuickSort){
+    std::list<int> vec{2,3,1,54,31,46};
+    std::list<int> vec2{1,2,3,31,46,54};
+    QuickSort(vec.begin(), vec.end());
+    ASSERT_EQ(vec,vec2);
+
+    std::list<char> vec3{'c','4','a','2','1','3'};
+    std::list<char> vec4{'1','2','3','4','a','c'};
+    QuickSort(vec3.begin(), vec3.end());
+    ASSERT_EQ(vec3,vec4);
+}
+
